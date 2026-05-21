@@ -7,14 +7,11 @@
 	const notyf = new Notyf();
 
 	const WEB3FORMS_ACCESS_KEY = "931fa0b5-c693-4a72-8282-5f8742347a6c";
-
 	const subject = "New message from Portfolio Contact Form";
 
-	// v-model bindings for each form field
 	const name = ref("");
 	const email = ref("");
 	const message = ref("");
-
 	const isLoading = ref(false);
 
 	const submitForm = async () => {
@@ -45,11 +42,9 @@
 			const result = await response.json();
 
 			if (result.success) {
-				// Clear form fields on success
 				name.value = "";
 				email.value = "";
 				message.value = "";
-
 				isLoading.value = false;
 				notyf.success("Message sent!");
 			} else {
@@ -60,7 +55,6 @@
 			console.log(error);
 			isLoading.value = false;
 			notyf.error("Failed to send message. Please try again.");
-
 		} finally {
 			resetRecaptcha();
 		}
@@ -73,7 +67,6 @@
 	const recaptchaWidgetId = ref(null);
 	const recaptchaToken = ref('');
 
-	// Called by reCAPTCHA when the user checks the box
 	function onRecaptchaSuccess(token) {
 		recaptchaToken.value = token;
 	}
@@ -137,48 +130,22 @@
 	            </div>
 
 	            <div class="col-lg-7">
-	            	<!-- @submit.prevent stops page reload; calls submitForm instead -->
 	                <form id="contact-form" class="p-4 rounded h-100" @submit.prevent="submitForm">
 	                    <div class="mb-3">
 	                        <label for="user-name" class="form-label">Full Name</label>
-	                        <input
-	                        	type="text"
-	                        	v-model="name"
-	                        	class="form-control"
-	                        	id="user-name"
-	                        	placeholder="Your Name"
-	                        	required
-	                        >
+	                        <input type="text" v-model="name" class="form-control" id="user-name" placeholder="Your Name" required>
 	                    </div>
 	                    <div class="mb-3">
 	                        <label for="user-email" class="form-label">Email address</label>
-	                        <input
-	                        	type="email"
-	                        	v-model="email"
-	                        	class="form-control"
-	                        	id="user-email"
-	                        	placeholder="name@example.com"
-	                        	required
-	                        >
+	                        <input type="email" v-model="email" class="form-control" id="user-email" placeholder="name@example.com" required>
 	                    </div>
 	                    <div class="mb-3">
 	                        <label for="user-message" class="form-label">Message</label>
-	                        <textarea
-	                        	v-model="message"
-	                        	class="form-control"
-	                        	id="user-message"
-	                        	rows="5"
-	                        	placeholder="How can I help you?"
-	                        	required
-	                        ></textarea>
-	                    </div>
-
-	                    <!-- reCAPTCHA widget renders here via grecaptcha.render() in onMounted -->
-	                    <div class="d-flex justify-content-end mb-3">
-	                    	<div ref="recaptchaContainer"></div>
+	                        <textarea v-model="message" class="form-control" id="user-message" rows="5" placeholder="How can I help you?" required></textarea>
 	                    </div>
 	                    
-	                    <div class="d-flex justify-content-between align-items-center mt-4">
+	                    <!-- Bottom row: social icons | reCAPTCHA | Send button -->
+	                    <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-3">
 	                        <div class="social-links">
 	                            <a href="https://www.linkedin.com/in/brian-kelly-roque-411853254/" target="_blank" class="text-white me-3 fs-4">
 	                            	<i class="fab fa-linkedin" aria-label="LinkedIn Profile"></i>
@@ -187,7 +154,10 @@
 	                            	<i class="fab fa-github" aria-label="Github Profile"></i>
 	                            </a>
 	                        </div>
-	                        <!-- :disabled binds to isLoading so button is disabled while sending -->
+
+	                        <!-- reCAPTCHA sits here, between social icons and the button -->
+	                        <div ref="recaptchaContainer"></div>
+
 	                        <button type="submit" class="btn btn-cyan px-5 py-2" :disabled="isLoading">
 	                        	{{ isLoading ? "Sending..." : "Send Message" }}
 	                        </button>
