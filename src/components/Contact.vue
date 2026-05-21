@@ -67,7 +67,7 @@
 	}
 
 
-	const SITE_KEY = 'YOUR_RECAPTCHA_SITE_KEY';
+	const SITE_KEY = '6LcoKvUsAAAAAEUJU9-xdV38t_eqk7rQ08efv3vg';
 
 	const recaptchaContainer = ref(null);
 	const recaptchaWidgetId = ref(null);
